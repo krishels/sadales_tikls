@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:mans.e-st.lv)",
+      "WebFetch(domain:www.e-st.lv)",
+      "Bash(pip install:*)",
+      "Bash(python:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
