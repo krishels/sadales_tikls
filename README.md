@@ -77,6 +77,12 @@ python scraper.py --month 9 --year 2025
 ```
 *Output: `st_202509.json`*
 
+**Get month data with hourly granularity**:
+```bash
+python scraper.py --month 9 --year 2025 --granularity H
+```
+*Output: `st_202509.json` (with hourly data points)*
+
 **Get specific day**:
 ```bash
 python scraper.py --period day --day 15 --month 9 --year 2025
@@ -107,6 +113,7 @@ python scraper.py --month 9 --year 2025 --outfile custom_name.json
 | `--year` | Target year | Current year |
 | `--month` | Target month (1-12) | Current month |
 | `--day` | Target day (1-31) | Current day |
+| `--granularity` | Data granularity: `D` (daily), `H` (hourly) | `D` for month, `H` for day |
 | `--outfile` | Custom output filename | Auto-generated |
 | `--debug` | Show browser window | Headless mode |
 
