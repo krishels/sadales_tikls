@@ -287,13 +287,13 @@ class ElectricityScraper:
         )
         return self._format_response(response, neto)
 
-    def get_month_data(self, neto=True, year=None, month=None):
+    def get_month_data(self, neto=True, year=None, month=None, granularity=None):
         """Get consumption data for a specific month"""
         response = self._fetch_remote_data(
             period=self.PERIOD_MONTH,
             month=month,
             year=year,
-            granularity=self.GRANULARITY_DAY
+            granularity=granularity or self.GRANULARITY_DAY
         )
         return self._format_response(response, neto)
 
@@ -344,6 +344,7 @@ Note: Credentials must be set in .env file (see .env.example)
     parser.add_argument('--year', type=int, default=None, help='Year (default: current year)')
     parser.add_argument('--month', type=int, default=None, help='Month (1-12)')
     parser.add_argument('--day', type=int, default=None, help='Day (1-31)')
+    parser.add_argument('--granularity', default=None, choices=['D', 'H'], help='Data granularity: D=daily, H=hourly (default: D for month, H for day)')
     parser.add_argument('--neto', action='store_true', default=True, help='Include generation data (A-)')
     parser.add_argument('--outfile', default=None, help='Output JSON file (default: auto-generated)')
     parser.add_argument('--debug', action='store_true', help='Show browser window (default: run in background)')
@@ -393,7 +394,7 @@ Note: Credentials must be set in .env file (see .env.example)
             year_val = args.year or datetime.now().year
             auto_filename = f"st_{year_val}.json"
         elif args.period == 'month':
-            data = scraper.get_month_data(args.neto, args.year, args.month)
+            data = scraper.get_month_data(args.neto, args.year, args.month, args.granularity)
             year_val = args.year or datetime.now().year
             month_val = args.month or datetime.now().month
             auto_filename = f"st_{year_val}{month_val:02d}.json"
