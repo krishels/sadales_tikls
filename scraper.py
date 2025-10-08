@@ -127,9 +127,13 @@ class ElectricityScraper:
     @staticmethod
     def _format_timestamp(timestamp):
         """Convert JS timestamp to human-readable datetime"""
-        return datetime.fromtimestamp(
+        dt = datetime.fromtimestamp(
             int(timestamp) / 1000.0, tz=timezone(timedelta(hours=0))
-        ).strftime('%Y-%m-%d %H:%M:%S')
+        )
+        # If time is 00:00, deduct 1 minute to show previous day 23:59
+        if dt.hour == 0 and dt.minute == 0:
+            dt = dt - timedelta(minutes=1)
+        return dt.strftime('%Y-%m-%d %H:%M:%S')
 
     def _format_response(self, response_data, neto=True):
         """Parse and format the chart data"""
